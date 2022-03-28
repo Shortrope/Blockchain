@@ -14,7 +14,7 @@ const bcTest2 = [
     [[[[[], 1], 2], 3], 4],
 ];
 
-const blockchain = [[]];
+const blockchain = [];
 
 
 function getChoice() {
@@ -22,6 +22,9 @@ function getChoice() {
 }
 
 function getLastTransaction() {
+    if (blockchain.length < 1) {
+        blockchain.push([0]);
+    }
     return blockchain[blockchain.length - 1];
 }
 
@@ -33,6 +36,7 @@ function addTransaction(transactionAmount, lastTransaction) {
 function getUserInput() {
     return parseFloat(prompt("Your transaction amount please: "));
 }
+
 
 function displayMenu() {
     log('Choose an option:');
