@@ -17,6 +17,9 @@ const bcTest2 = [
 const blockchain = [[]];
 
 
+function getChoice() {
+    return prompt("Choice: ");
+}
 
 function getLastTransaction() {
     return blockchain[blockchain.length - 1];
@@ -31,14 +34,22 @@ function getUserInput() {
     return parseFloat(prompt("Your transaction amount please: "));
 }
 
+function displayMenu() {
+    log('Choose an option:');
+    log('   a: Add transaction');
+    log('   o: Output chain');
+    log('   q: Quit');
+}
 
+while (true) {
+    displayMenu();
+    const choice = getChoice();
+    if (choice == 'a') {
+        addValue(getUserInput(), getLastTransaction());
+    } else if (choice == 'o') {
+        log(blockchain);
+    } else {
+        break;
+    }
 
-log(blockchain)
-addValue(getUserInput(), getLastTransaction())
-log(blockchain)
-addValue(getUserInput(), getLastTransaction())
-log(blockchain)
-addValue(getUserInput(), getLastTransaction())
-log(blockchain)
-addValue(getUserInput(), getLastTransaction())
-log(blockchain)
+}
