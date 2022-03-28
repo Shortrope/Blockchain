@@ -25,7 +25,7 @@ function getLastTransaction() {
     return blockchain[blockchain.length - 1];
 }
 
-function addValue(transactionAmount, lastTransaction) {
+function addTransaction(transactionAmount, lastTransaction) {
     log("addValue(" + transactionAmount + ", " + lastTransaction + ")");
     blockchain.push([lastTransaction, transactionAmount]);
 }
@@ -45,7 +45,7 @@ while (true) {
     displayMenu();
     const choice = getChoice();
     if (choice == 'a') {
-        addValue(getUserInput(), getLastTransaction());
+        addTransaction(getUserInput(), getLastTransaction());
     } else if (choice == 'o') {
         log(blockchain);
     } else {
