@@ -37,11 +37,23 @@ function getUserInput() {
     return parseFloat(prompt("Your transaction amount please: "));
 }
 
+function verifyChain() {
+    if (blockchain.length < 2) { return true; }
+    for (index in blockchain) {
+        if (index == 0) { continue; }
+        if (blockchain[index][0] != blockchain[index - 1]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 function displayMenu() {
     log('Choose an option:');
     log('   a: Add transaction');
     log('   o: Output chain');
+    log('   m: Manipulate');
     log('   q: Quit');
 }
 
@@ -50,8 +62,16 @@ while (true) {
     const choice = getChoice();
     if (choice == 'a') {
         addTransaction(getUserInput(), getLastTransaction());
+        if (!verifyChain()) {
+            log('INVALID BLOCKCHAIN!!!');
+            log('Done!');
+            log(blockchain);
+            break;
+        }
     } else if (choice == 'o') {
         log(blockchain);
+    } else if (choice == 'm') {
+        blockchain[0] = -1;
     } else {
         break;
     }
