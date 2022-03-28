@@ -1,11 +1,15 @@
-blockchain = [[]]
+blockchain = []
 
 
 def get_last_blockchain_value():
+    if len(blockchain) < 1:
+        return None
     return blockchain[-1]
 
 
-def add_value(transaction_amount, last_transaction):
+def add_transaction(transaction_amount, last_transaction):
+    if last_transaction == None:
+        last_transaction = [1]
     blockchain.append([last_transaction, transaction_amount])
 
 
@@ -29,7 +33,7 @@ while True:
     print("  q: Quit")
     choice = get_user_choice()
     if choice == "a":
-        add_value(get_transaction_amount(), get_last_blockchain_value())
+        add_transaction(get_transaction_amount(), get_last_blockchain_value())
     elif choice == "o":
         print_blockchain_elements()
     else:
