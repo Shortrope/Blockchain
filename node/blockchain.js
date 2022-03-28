@@ -29,7 +29,6 @@ function getLastTransaction() {
 }
 
 function addTransaction(transactionAmount, lastTransaction) {
-    log("addValue(" + transactionAmount + ", " + lastTransaction + ")");
     blockchain.push([lastTransaction, transactionAmount]);
 }
 
