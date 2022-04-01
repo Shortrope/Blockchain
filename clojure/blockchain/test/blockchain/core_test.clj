@@ -31,3 +31,8 @@
   (add-transaction 2.0)
   (is (= [[[0] 1.0]
           [[[0] 1.0] 2.0]] @blockchain)))
+
+
+(deftest get-user-input-test
+  (println "Enter 2.0")
+  (is (= 2.0 (get-user-input))))
