@@ -16,12 +16,16 @@
   (flush)
   (Float/parseFloat (read-line)))
 
+(defn manipulate-blockchain []
+  (reset! blockchain (assoc @blockchain 0 [-1])))
+
 (defn display-blockchain []
   ;(let [bc @blockchain]
   (println @blockchain))
 
 (def menu "  a: Add Transaction
   p: Print Blockchain
+  m: Manipulate Blockchain
   q: Quit
 Your choice: ")
 
@@ -35,4 +39,5 @@ Your choice: ")
       (= @choice "a") (let [new-transaction (get-user-input)]
                         (add-transaction new-transaction))
       (= @choice "p") (display-blockchain)
+      (= @choice "m") (manipulate-blockchain)
       (= @choice "q") (println "Quiting..."))))
