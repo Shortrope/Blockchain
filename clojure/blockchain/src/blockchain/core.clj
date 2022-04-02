@@ -22,6 +22,18 @@
 
 
 (defn -main [& args]
-  (let [new-transaction (get-user-input)]
-    (add-transaction new-transaction))
-  (print @blockchain))
+  (def choice (atom ""))
+  (let [menu "a: Add Transaction
+p: Print Blockchain
+q: Quit
+
+Your choice: "]
+    (while (not (= @choice "q"))
+      (print menu)
+      (flush)
+      (reset! choice (read-line))
+      (cond
+        (= @choice "a") (let [new-transaction (get-user-input)]
+                          (add-transaction new-transaction))
+        (= @choice "p") (display-blockchain)
+        (= @choice "q") (println "Quiting...")))))
