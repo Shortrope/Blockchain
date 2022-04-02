@@ -21,3 +21,7 @@
   (println @blockchain))
 
 
+(defn -main [& args]
+  (let [new-transaction (get-user-input)]
+    (add-transaction new-transaction))
+  (print @blockchain))
