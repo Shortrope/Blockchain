@@ -33,6 +33,26 @@
           [[[0] 1.0] 2.0]] @blockchain)))
 
 
-(deftest get-user-input-test
-  (println "Enter 2.0")
-  (is (= 2.0 (get-user-input))))
+(deftest verify-blockchain-test
+  (testing "Happy path:"
+    (testing "Empty blockchain "
+      (reset! blockchain [])
+      (is (verify-blockchain)))
+    (testing "Single item blockchain"
+      (reset! blockchain [[[0] 1]])
+      (is (verify-blockchain)))
+    (testing "Multi item blockchain"
+      (reset! blockchain [[[0] 1] [[[0] 1] 2] [[[[0] 1] 2] 3] [[[[[0] 1] 2] 3] 4]])
+      (is (verify-blockchain))))
+  (testing "Sad path:"
+    (testing "Altered blockchain should return false"
+      (reset! blockchain [[[0] 1] [[[0] 1] 2] [[[[0] 1] 2] 3] [[[[[0] 1] 2] -1111] 4]])
+      (is (not (verify-blockchain))))
+    (testing "Another Altered blockchain should return false"
+      (reset! blockchain [[[-1111] 1] [[[0] 1] 2] [[[[0] 1] 2] 3] [[[[[0] 1] 2] 3] 4]])
+      (is (not (verify-blockchain))))))
+
+
+;(deftest get-user-input-test
+  ;(println "Enter 2.0")
+  ;(is (= 2.0 (get-user-input))))

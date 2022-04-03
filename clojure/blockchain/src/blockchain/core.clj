@@ -19,6 +19,17 @@
 (defn manipulate-blockchain []
   (reset! blockchain (assoc @blockchain 0 [-1])))
 
+(defn verify-blockchain []
+  (loop [bc @blockchain]
+    (if (< (count bc) 2)
+      true
+      (let [tx1 (first bc)
+            tx2 (second bc)]
+        (if (not (= tx1 (first tx2)))
+          false
+          (recur (rest bc)))))))
+
+
 (defn display-blockchain []
   ;(let [bc @blockchain]
   (println @blockchain))
