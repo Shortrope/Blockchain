@@ -24,6 +24,8 @@ def get_user_choice():
 def print_blockchain_elements():
     for block in blockchain:
         print(block)
+    else:
+        print("-" * 20)
 
 
 def verify_chain():
@@ -34,20 +36,18 @@ def verify_chain():
     return True
 
 
-while True:
+wait_for_input = True
+
+while wait_for_input:
     print("Choose Option:")
     print("  a: Add transaction amount")
-    print("  o: Output chain")
+    print("  p: Print chain")
     print("  m: Manipulate chain")
     print("  q: Quit")
     choice = get_user_choice()
     if choice == "a":
         add_transaction(get_transaction_amount(), get_last_blockchain_value())
-        if not verify_chain():
-            print("INVALID CHAIN!!!\nDone!")
-            print_blockchain_elements()
-            break
-    elif choice == "o":
+    elif choice == "p":
         print_blockchain_elements()
     elif choice == "m":
         if len(blockchain) >= 1:
@@ -55,6 +55,11 @@ while True:
         if not verify_chain():
             print("INVALID CHAIN!!!\nDone!")
             print_blockchain_elements()
-            break
+            wait_for_input = False
     else:
-        break
+        continue
+
+    if not verify_chain():
+        print("INVALID CHAIN!!!\nDone!")
+        print_blockchain_elements()
+        wait_for_input = False
