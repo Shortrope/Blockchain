@@ -51,7 +51,7 @@ function verifyChain() {
 function displayMenu() {
     log('Choose an option:');
     log('   a: Add transaction');
-    log('   o: Output chain');
+    log('   p: Print chain');
     log('   m: Manipulate');
     log('   q: Quit');
 }
@@ -61,17 +61,20 @@ while (true) {
     const choice = getChoice();
     if (choice == 'a') {
         addTransaction(getUserInput(), getLastTransaction());
-        if (!verifyChain()) {
-            log('INVALID BLOCKCHAIN!!!');
-            log('Done!');
-            log(blockchain);
-            break;
-        }
-    } else if (choice == 'o') {
+    } else if (choice == 'p') {
         log(blockchain);
     } else if (choice == 'm') {
         blockchain[0] = -1;
+    } else if (choice == 'q') {
+        break;
     } else {
+        continue;
+    }
+
+    if (!verifyChain()) {
+        log('INVALID BLOCKCHAIN!!!');
+        log('Done!');
+        log(blockchain);
         break;
     }
 
