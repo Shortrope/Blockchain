@@ -56,6 +56,8 @@ while wait_for_input:
             print("INVALID CHAIN!!!\nDone!")
             print_blockchain_elements()
             wait_for_input = False
+    elif choice == "q":
+        break
     else:
         continue
 
