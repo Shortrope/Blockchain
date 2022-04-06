@@ -36,32 +36,37 @@ def verify_chain():
     return True
 
 
-wait_for_input = True
+def main():
+    wait_for_input = True
 
-while wait_for_input:
-    print("Choose Option:")
-    print("  a: Add transaction amount")
-    print("  p: Print chain")
-    print("  m: Manipulate chain")
-    print("  q: Quit")
-    choice = get_user_choice()
-    if choice == "a":
-        add_transaction(get_transaction_amount(), get_last_blockchain_value())
-    elif choice == "p":
-        print_blockchain_elements()
-    elif choice == "m":
-        if len(blockchain) >= 1:
-            blockchain[0] = [-1]
+    while wait_for_input:
+        print("Choose Option:")
+        print("  a: Add transaction amount")
+        print("  p: Print chain")
+        print("  m: Manipulate chain")
+        print("  q: Quit")
+        choice = get_user_choice()
+        if choice == "a":
+            add_transaction(get_transaction_amount(), get_last_blockchain_value())
+        elif choice == "p":
+            print_blockchain_elements()
+        elif choice == "m":
+            if len(blockchain) >= 1:
+                blockchain[0] = [-1]
+            if not verify_chain():
+                print("INVALID CHAIN!!!\nDone!")
+                print_blockchain_elements()
+                wait_for_input = False
+        elif choice == "q":
+            break
+        else:
+            continue
+
         if not verify_chain():
             print("INVALID CHAIN!!!\nDone!")
             print_blockchain_elements()
             wait_for_input = False
-    elif choice == "q":
-        break
-    else:
-        continue
 
-    if not verify_chain():
-        print("INVALID CHAIN!!!\nDone!")
-        print_blockchain_elements()
-        wait_for_input = False
+
+if __name__ == "__main__":
+    main()
