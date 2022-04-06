@@ -7,7 +7,8 @@ def get_last_transaction():
     return blockchain[-1]
 
 
-def add_transaction(transaction_amount, last_transaction):
+def add_transaction(transaction_amount):
+    last_transaction = get_last_transaction()
     if last_transaction == None:
         last_transaction = [0]
     blockchain.append([last_transaction, transaction_amount])
@@ -45,7 +46,7 @@ def main():
         print("  q: Quit")
         choice = get_user_choice()
         if choice == "a":
-            add_transaction(get_transaction_amount(), get_last_transaction())
+            add_transaction(get_transaction_amount())
         elif choice == "p":
             print_blockchain_elements()
         elif choice == "m":
