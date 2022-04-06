@@ -53,10 +53,6 @@ def main():
         elif choice == "m":
             if len(blockchain) >= 1:
                 blockchain[0] = [-1]
-            if not verify_chain():
-                print("INVALID CHAIN!!!\nDone!")
-                print_blockchain_elements()
-                wait_for_input = False
         elif choice == "q":
             break
         else:
