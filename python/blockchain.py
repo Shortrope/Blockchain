@@ -23,8 +23,12 @@ def get_user_choice():
 
 
 def print_blockchain_elements():
+    output = ""
+    # output = ", ".join(map(str, blockchain))
+    # output += "\n" + ("-" * 20)
     for block in blockchain:
-        print(block)
+        output += f"\n{block}"
+    print(output)
 
 
 def verify_chain():
