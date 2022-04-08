@@ -21,21 +21,6 @@ class TestBlockchain(unittest.TestCase):
         bc.blockchain = [[[0], 1.0], [[[0], 1.0], 2.0], [[[[0], 1.0], 2.0], 3.0]]
         self.assertListEqual([[[[0], 1.0], 2.0], 3.0], bc.get_last_transaction())
 
-    def test_add_tranasaction_to_empty_chain(self):
-        bc.blockchain = []
-        bc.add_transaction(1)
-        expected = [[0], 1]
-        self.assertListEqual(expected, bc.get_last_transaction())
-
-    def test_add_tranasaction_to_populated_chain(self):
-        bc.blockchain = [[[0], 1]]
-        bc.add_transaction(2.0)
-        expected = [[[0], 1], [[[0], 1], 2.0]]
-        self.assertListEqual(expected, bc.blockchain)
-        bc.add_transaction(3.0)
-        expected = [[[0], 1], [[[0], 1], 2.0], [[[[0], 1.0], 2.0], 3.0]]
-        self.assertListEqual(expected, bc.blockchain)
-
     def test_verify_empty_chain(self):
         bc.blockchain = []
         self.assertTrue(bc.verify_chain())
@@ -57,6 +42,19 @@ class TestBlockchain(unittest.TestCase):
         self.assertFalse(bc.verify_chain())
         bc.blockchain = [[[0], 1], [[[0], 1], 2.0], [[[[1], 1.0], 2.0], 3.0]]
         self.assertFalse(bc.verify_chain())
+
+    def test_add_transaction_to_open_transactions(self):
+        bc.open_transactions = []
+        bc.add_transaction("Josie", "Mak", 2.2)
+        expected = [{"sender": "Mak", "recipient": "Josie", "amount": 2.2}]
+        self.assertListEqual(expected, bc.open_transactions)
+
+        bc.add_transaction("Rosie", "Mak", 3.3)
+        expected = [
+            {"sender": "Mak", "recipient": "Josie", "amount": 2.2},
+            {"sender": "Mak", "recipient": "Rosie", "amount": 3.3},
+        ]
+        self.assertListEqual(expected, bc.open_transactions)
 
 
 if __name__ == "__main__":

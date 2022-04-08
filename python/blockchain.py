@@ -1,4 +1,6 @@
 blockchain = []
+open_transactions = []
+owner = "Mak"
 
 
 def get_last_transaction():
@@ -7,15 +9,20 @@ def get_last_transaction():
     return blockchain[-1]
 
 
-def add_transaction(transaction_amount):
-    last_transaction = get_last_transaction()
-    if last_transaction == None:
-        last_transaction = [0]
-    blockchain.append([last_transaction, transaction_amount])
+def add_transaction(recipient, sender=owner, amount=1.0):
+    transaction = {"recipient": recipient, "sender": sender, "amount": amount}
+    open_transactions.append(transaction)
 
 
 def get_transaction_amount():
     return float(input("Your transaction amount please: "))
+
+
+def get_transaction():
+    sender = owner
+    recipient = input("Who is the recipient? ")
+    amount = float(input("Your transaction amount: "))
+    return recipient, sender, amount
 
 
 def get_user_choice():
@@ -50,7 +57,9 @@ def main():
         print("  q: Quit")
         choice = get_user_choice()
         if choice == "a":
-            add_transaction(get_transaction_amount())
+            recipient, sender, amount = get_transaction()
+            add_transaction(recipient, sender, amount)
+            print(open_transactions)
         elif choice == "p":
             print_blockchain_elements()
         elif choice == "m":
