@@ -14,10 +14,6 @@ def add_transaction(recipient, sender=owner, amount=1.0):
     open_transactions.append(transaction)
 
 
-def get_transaction_amount():
-    return float(input("Your transaction amount please: "))
-
-
 def get_transaction():
     sender = owner
     recipient = input("Who is the recipient? ")
