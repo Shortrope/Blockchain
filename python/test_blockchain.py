@@ -43,12 +43,11 @@ class TestBlockchain(unittest.TestCase):
         bc.blockchain = [[[0], 1], [[[0], 1], 2.0], [[[[1], 1.0], 2.0], 3.0]]
         self.assertFalse(bc.verify_chain())
 
-    def test_add_transaction_to_open_transactions(self):
+    def test_add_transaction_to_open_transactions_list(self):
         bc.open_transactions = []
         bc.add_transaction("Josie", "Mak", 2.2)
         expected = [{"sender": "Mak", "recipient": "Josie", "amount": 2.2}]
         self.assertListEqual(expected, bc.open_transactions)
-
         bc.add_transaction("Rosie", "Mak", 3.3)
         expected = [
             {"sender": "Mak", "recipient": "Josie", "amount": 2.2},
