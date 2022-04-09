@@ -1,4 +1,4 @@
-from tkinter import W
+import copy
 
 genesis_block = {"previous_hash": "", "index": 0, "transactions": []}
 blockchain = [genesis_block]
@@ -38,9 +38,10 @@ def mine_block():
     new_block = {
         "previous_hash": last_block_hash,
         "index": len(blockchain),
-        "transactions": open_transactions,
+        "transactions": copy.deepcopy(open_transactions),
     }
     blockchain.append(new_block)
+    open_transactions.clear()
 
 
 def print_blockchain_elements():
