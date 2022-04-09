@@ -55,8 +55,6 @@ def print_blockchain_elements():
 def verify_chain():
     for i, block in enumerate(blockchain):
         if i > 0:
-            print(f"prev hash: {block['previous_hash']}")
-            print(f"calc prev hash: {hash_block(blockchain[i-1])}")
             if block["previous_hash"] != hash_block(blockchain[i - 1]):
                 return False
     return True
