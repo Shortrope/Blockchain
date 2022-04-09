@@ -7,8 +7,6 @@ owner = "Mak"
 
 
 def get_last_transaction():
-    if len(blockchain) < 1:
-        return None
     return blockchain[-1]
 
 
