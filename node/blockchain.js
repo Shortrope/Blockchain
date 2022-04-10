@@ -30,7 +30,8 @@ function getLastTransaction() {
 
 function addTransaction(sender, recipient, amount=1.0) {
     tx = {'sender': sender, 'recipient': recipient, 'amount': amount};
-    blockchain.push(tx);
+    newBlock = {'prevHash': 'XYZ', 'index': blockchain.length, 'transactions': tx}
+    blockchain.push(newBlock);
 }
 
 function getUserInput() {
