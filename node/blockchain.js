@@ -15,7 +15,7 @@ const bcTest2 = [
 ];
 
 const blockchain = [];
-
+const owner = 'Mak';
 
 function getChoice() {
     return prompt("Choice: ");
@@ -28,12 +28,16 @@ function getLastTransaction() {
     return blockchain[blockchain.length - 1];
 }
 
-function addTransaction(transactionAmount, lastTransaction) {
-    blockchain.push([lastTransaction, transactionAmount]);
+function addTransaction(sender, recipient, amount=1.0) {
+    tx = {'sender': sender, 'recipient': recipient, 'amount': amount};
+    blockchain.push(tx);
 }
 
 function getUserInput() {
-    return parseFloat(prompt("Your transaction amount please: "));
+    sender = owner;
+    recipient = prompt("Who is the recipient? ");
+    amount = parseFloat(prompt("Your transaction amount please: "));
+    return sender, recipient, amount;
 }
 
 function verifyChain() {
