@@ -37,7 +37,7 @@ function getUserInput() {
     sender = owner;
     recipient = prompt("Who is the recipient? ");
     amount = parseFloat(prompt("Your transaction amount please: "));
-    return sender, recipient, amount;
+    return {'sender': sender, 'recipient': recipient, 'amount': amount};
 }
 
 function verifyChain() {
@@ -64,7 +64,8 @@ while (true) {
     displayMenu();
     const choice = getChoice();
     if (choice == 'a') {
-        addTransaction(getUserInput(), getLastTransaction());
+        const txDetails = getUserInput()
+        addTransaction(txDetails['sender'], txDetails['recipient'], txDetails['amount']);
     } else if (choice == 'p') {
         log(blockchain);
     } else if (choice == 'm') {
