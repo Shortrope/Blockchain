@@ -26,9 +26,14 @@ function getLastTransaction() {
     return blockchain[blockchain.length - 1];
 }
 
+function hashBlock(block) {
+    return JSON.stringify(block);
+}
+
+
 function addTransaction(sender, recipient, amount=1.0) {
     tx = {'sender': sender, 'recipient': recipient, 'amount': amount};
-    newBlock = {'prevHash': 'XYZ', 'index': blockchain.length, 'transaction': tx}
+    newBlock = {'prevHash': hashBlock(getLastTransaction()), 'index': blockchain.length, 'transaction': tx}
     blockchain.push(newBlock);
 }
 
