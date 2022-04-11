@@ -23,9 +23,6 @@ function getChoice() {
 }
 
 function getLastTransaction() {
-    if (blockchain.length < 1) {
-        blockchain.push([0]);
-    }
     return blockchain[blockchain.length - 1];
 }
 
