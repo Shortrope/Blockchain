@@ -48,7 +48,7 @@ function verifyChain() {
     if (blockchain.length < 2) { return true; }
     for (index in blockchain) {
         if (index == 0) { continue; }
-        if (blockchain[index][0] != blockchain[index - 1]) {
+        if (blockchain[index]['prevHash'] != JSON.stringify(blockchain[index - 1])) {
             return false;
         }
     }
