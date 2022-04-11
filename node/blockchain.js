@@ -14,33 +14,41 @@ const bcTest2 = [
     [[[[[], 1], 2], 3], 4],
 ];
 
-const blockchain = [];
-
+const genesisTransaction = {'prevHash': '', 'index': 0, 'transaction': {}}
+const blockchain = [genesisTransaction];
+const owner = 'Mak';
 
 function getChoice() {
     return prompt("Choice: ");
 }
 
 function getLastTransaction() {
-    if (blockchain.length < 1) {
-        blockchain.push([0]);
-    }
     return blockchain[blockchain.length - 1];
 }
 
-function addTransaction(transactionAmount, lastTransaction) {
-    blockchain.push([lastTransaction, transactionAmount]);
+function hashBlock(block) {
+    return JSON.stringify(block);
+}
+
+
+function addTransaction(sender, recipient, amount=1.0) {
+    tx = {'sender': sender, 'recipient': recipient, 'amount': amount};
+    newBlock = {'prevHash': hashBlock(getLastTransaction()), 'index': blockchain.length, 'transaction': tx}
+    blockchain.push(newBlock);
 }
 
 function getUserInput() {
-    return parseFloat(prompt("Your transaction amount please: "));
+    sender = owner;
+    recipient = prompt("Who is the recipient? ");
+    amount = parseFloat(prompt("Your transaction amount please: "));
+    return {'sender': sender, 'recipient': recipient, 'amount': amount};
 }
 
 function verifyChain() {
     if (blockchain.length < 2) { return true; }
     for (index in blockchain) {
         if (index == 0) { continue; }
-        if (blockchain[index][0] != blockchain[index - 1]) {
+        if (blockchain[index]['prevHash'] != JSON.stringify(blockchain[index - 1])) {
             return false;
         }
     }
@@ -60,7 +68,8 @@ while (true) {
     displayMenu();
     const choice = getChoice();
     if (choice == 'a') {
-        addTransaction(getUserInput(), getLastTransaction());
+        const txDetails = getUserInput()
+        addTransaction(txDetails['sender'], txDetails['recipient'], txDetails['amount']);
     } else if (choice == 'p') {
         log(blockchain);
     } else if (choice == 'm') {
