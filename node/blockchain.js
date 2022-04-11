@@ -14,7 +14,8 @@ const bcTest2 = [
     [[[[[], 1], 2], 3], 4],
 ];
 
-const blockchain = [];
+const genesisTransaction = {'prevHash': '', 'index': 0, 'transaction': {}}
+const blockchain = [genesisTransaction];
 const owner = 'Mak';
 
 function getChoice() {
@@ -30,7 +31,7 @@ function getLastTransaction() {
 
 function addTransaction(sender, recipient, amount=1.0) {
     tx = {'sender': sender, 'recipient': recipient, 'amount': amount};
-    newBlock = {'prevHash': 'XYZ', 'index': blockchain.length, 'transactions': tx}
+    newBlock = {'prevHash': 'XYZ', 'index': blockchain.length, 'transaction': tx}
     blockchain.push(newBlock);
 }
 
