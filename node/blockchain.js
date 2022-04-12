@@ -14,7 +14,7 @@ const bcTest2 = [
     [[[[[], 1], 2], 3], 4],
 ];
 
-const genesisTransaction = {'prevHash': '', 'index': 0, 'transactions': {}}
+const genesisTransaction = {'prevHash': '', 'index': 0, 'transactions': []}
 const blockchain = [genesisTransaction];
 const openTransactions = [];
 const participants = new Set();
@@ -24,6 +24,13 @@ function getChoice() {
     return prompt("Choice: ");
 }
 
+function getUserInput() {
+    sender = owner;
+    recipient = prompt("Who is the recipient? ");
+    amount = parseFloat(prompt("Your transaction amount please: "));
+    return {'sender': sender, 'recipient': recipient, 'amount': amount};
+}
+
 function getLastTransaction() {
     return blockchain[blockchain.length - 1];
 }
@@ -31,7 +38,6 @@ function getLastTransaction() {
 function hashBlock(block) {
     return JSON.stringify(block);
 }
-
 
 function addTransaction(sender, recipient, amount=1.0) {
     let tx = {'sender': sender, 'recipient': recipient, 'amount': amount};
@@ -48,13 +54,6 @@ function mineBlock() {
     openTransactions.length = 0;
 }
 
-function getUserInput() {
-    sender = owner;
-    recipient = prompt("Who is the recipient? ");
-    amount = parseFloat(prompt("Your transaction amount please: "));
-    return {'sender': sender, 'recipient': recipient, 'amount': amount};
-}
-
 function verifyChain() {
     if (blockchain.length < 2) { return true; }
     for (index in blockchain) {
@@ -66,6 +65,22 @@ function verifyChain() {
     return true;
 }
 
+function calcBalance(participant) {
+    let total = 0;
+    blockchain.forEach(elem => {
+        let transactions = elem['transactions'];
+        transactions.forEach(tx => {
+            if (tx['sender'] == participant) {
+                total -= tx['amount'];
+            }
+            if (tx['recipient'] == participant) {
+                total += tx['amount'];
+            }
+        });
+    });
+    log(`${participant} balance: ${total}`);
+}
+
 
 function displayMenu() {
     log('Choose an option:');
@@ -74,6 +89,7 @@ function displayMenu() {
     log('   o: Print openTransactions');
     log('  pp: Print participants');
     log('   m: Mine blocks');
+    log('   c: Calc Balances');
     log('   h: Hack');
     log('   t: Run Test Func');
     log('   q: Quit');
@@ -94,6 +110,8 @@ while (true) {
         participants.forEach(elem => {log(`  - ${elem}`)})
     } else if (choice == 'm') {
         mineBlock();
+    } else if (choice == 'c') {
+        participants.forEach(p => {calcBalance(p)})
     } else if (choice == 'h') {
         blockchain[0] = -1;
     } else if (choice == 'q') {
