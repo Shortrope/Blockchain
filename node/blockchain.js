@@ -14,8 +14,9 @@ const bcTest2 = [
     [[[[[], 1], 2], 3], 4],
 ];
 
-const genesisTransaction = {'prevHash': '', 'index': 0, 'transaction': {}}
+const genesisTransaction = {'prevHash': '', 'index': 0, 'transactions': {}}
 const blockchain = [genesisTransaction];
+const openTransactions = [];
 const owner = 'Mak';
 
 function getChoice() {
@@ -32,9 +33,16 @@ function hashBlock(block) {
 
 
 function addTransaction(sender, recipient, amount=1.0) {
-    tx = {'sender': sender, 'recipient': recipient, 'amount': amount};
-    newBlock = {'prevHash': hashBlock(getLastTransaction()), 'index': blockchain.length, 'transaction': tx}
+    let tx = {'sender': sender, 'recipient': recipient, 'amount': amount};
+    openTransactions.push(tx);
+}
+
+function mineBlock() {
+    let newBlock = {'prevHash': hashBlock(getLastTransaction()), 
+                    'index': blockchain.length, 
+                    'transactions': JSON.parse(JSON.stringify(openTransactions))};
     blockchain.push(newBlock);
+    openTransactions.length = 0;
 }
 
 function getUserInput() {
@@ -60,7 +68,10 @@ function displayMenu() {
     log('Choose an option:');
     log('   a: Add transaction');
     log('   p: Print chain');
-    log('   m: Manipulate');
+    log('   o: Print openTransactions');
+    log('   m: Mine blocks');
+    log('   h: Hack');
+    log('   t: Run Test Func');
     log('   q: Quit');
 }
 
@@ -72,7 +83,11 @@ while (true) {
         addTransaction(txDetails['sender'], txDetails['recipient'], txDetails['amount']);
     } else if (choice == 'p') {
         log(blockchain);
+    } else if (choice == 'o') {
+        log(openTransactions);
     } else if (choice == 'm') {
+        mineBlock();
+    } else if (choice == 'h') {
         blockchain[0] = -1;
     } else if (choice == 'q') {
         break;
