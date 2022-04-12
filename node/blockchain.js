@@ -72,6 +72,7 @@ function displayMenu() {
     log('   a: Add transaction');
     log('   p: Print chain');
     log('   o: Print openTransactions');
+    log('  pp: Print participants');
     log('   m: Mine blocks');
     log('   h: Hack');
     log('   t: Run Test Func');
@@ -88,6 +89,9 @@ while (true) {
         log(blockchain);
     } else if (choice == 'o') {
         log(openTransactions);
+    } else if (choice == 'pp') {
+        log('Participants:')
+        participants.forEach(elem => {log(`  - ${elem}`)})
     } else if (choice == 'm') {
         mineBlock();
     } else if (choice == 'h') {
