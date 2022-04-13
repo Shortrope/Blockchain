@@ -17,6 +17,7 @@ const bcTest2 = [
 const genesisTransaction = {'prevHash': '', 'index': 0, 'transactions': {}}
 const blockchain = [genesisTransaction];
 const openTransactions = [];
+const participants = new Set();
 const owner = 'Mak';
 
 function getChoice() {
@@ -35,6 +36,8 @@ function hashBlock(block) {
 function addTransaction(sender, recipient, amount=1.0) {
     let tx = {'sender': sender, 'recipient': recipient, 'amount': amount};
     openTransactions.push(tx);
+    participants.add(sender);
+    participants.add(recipient);
 }
 
 function mineBlock() {
@@ -69,6 +72,7 @@ function displayMenu() {
     log('   a: Add transaction');
     log('   p: Print chain');
     log('   o: Print openTransactions');
+    log('  pp: Print participants');
     log('   m: Mine blocks');
     log('   h: Hack');
     log('   t: Run Test Func');
@@ -85,6 +89,9 @@ while (true) {
         log(blockchain);
     } else if (choice == 'o') {
         log(openTransactions);
+    } else if (choice == 'pp') {
+        log('Participants:')
+        participants.forEach(elem => {log(`  - ${elem}`)})
     } else if (choice == 'm') {
         mineBlock();
     } else if (choice == 'h') {
