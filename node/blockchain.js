@@ -78,7 +78,7 @@ function calcBalance(participant) {
             }
         });
     });
-    log(`${participant} balance: ${total}`);
+    return total;
 }
 
 
@@ -111,7 +111,7 @@ while (true) {
     } else if (choice == 'm') {
         mineBlock();
     } else if (choice == 'c') {
-        participants.forEach(p => {calcBalance(p)})
+        participants.forEach(p => {log(`${p}: ${calcBalance(p)}`)})
     } else if (choice == 'h') {
         blockchain[0] = -1;
     } else if (choice == 'q') {
