@@ -2,17 +2,6 @@ const prompt = require("prompt-sync")({ sigint: true });
 
 function log(m) { console.log(m) }
 
-const bcTest = [
-    [],
-    [[], 1]
-]
-const bcTest2 = [
-    [],
-    [[], 1],
-    [[[], 1], 2],
-    [[[[], 1], 2], 3],
-    [[[[[], 1], 2], 3], 4],
-];
 
 const genesisTransaction = {'prevHash': '', 'index': 0, 'transactions': []}
 const blockchain = [genesisTransaction];
