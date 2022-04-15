@@ -2,6 +2,7 @@ const prompt = require("prompt-sync")({ sigint: true });
 
 function log(m) { console.log(m) }
 
+const MINING_REWARD = 10
 const GENESIS_TRANSACTION = {'prevHash': '', 'index': 0, 'transactions': []}
 const blockchain = [GENESIS_TRANSACTION];
 const openTransactions = [];
@@ -35,6 +36,8 @@ function addTransaction(sender, recipient, amount=1.0) {
 }
 
 function mineBlock() {
+    let rewardTx = {'sender': 'MINING', 'recipient': owner, 'amount': MINING_REWARD};
+    openTransactions.push(rewardTx);
     let newBlock = {'prevHash': hashBlock(getLastTransaction()), 
                     'index': blockchain.length, 
                     'transactions': JSON.parse(JSON.stringify(openTransactions))};
