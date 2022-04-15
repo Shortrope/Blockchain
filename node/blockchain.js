@@ -2,9 +2,8 @@ const prompt = require("prompt-sync")({ sigint: true });
 
 function log(m) { console.log(m) }
 
-
-const genesisTransaction = {'prevHash': '', 'index': 0, 'transactions': []}
-const blockchain = [genesisTransaction];
+const GENESIS_TRANSACTION = {'prevHash': '', 'index': 0, 'transactions': []}
+const blockchain = [GENESIS_TRANSACTION];
 const openTransactions = [];
 const participants = new Set();
 const owner = 'Mak';
