@@ -53,6 +53,7 @@ function mineBlock() {
                     'transactions': JSON.parse(JSON.stringify(openTransactions))};
     blockchain.push(newBlock);
     openTransactions.length = 0;
+    participants.add(owner);
 }
 
 function verifyChain() {
