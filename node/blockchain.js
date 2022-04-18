@@ -28,11 +28,21 @@ function hashBlock(block) {
     return JSON.stringify(block);
 }
 
+function verifyTransaction(transaction) {
+    let senderBalance = calcBalance(transaction['sender']);
+    log(`verifyTransaction(): senderBalance ${senderBalance} : txAmount ${transaction['amount']}`);
+    return senderBalance >= transaction['amount'];
+}
+
 function addTransaction(sender, recipient, amount=1.0) {
     let tx = {'sender': sender, 'recipient': recipient, 'amount': amount};
-    openTransactions.push(tx);
-    participants.add(sender);
-    participants.add(recipient);
+    if (verifyTransaction(tx)) {
+        openTransactions.push(tx);
+        participants.add(sender);
+        participants.add(recipient);
+        return true
+    }
+    return false
 }
 
 function mineBlock() {
@@ -56,8 +66,18 @@ function verifyChain() {
     return true;
 }
 
+function calcOpenTransactionsToBeSent(participant) {
+    let sendAmount = 0;
+    openTransactions.forEach(tx => {
+        if (tx['sender'] == participant) {
+            sendAmount += tx['amount'];
+        }
+    });
+    return sendAmount
+}
+
 function calcBalance(participant) {
-    let total = 0;
+    let total = -(calcOpenTransactionsToBeSent(participant));
     blockchain.forEach(elem => {
         let transactions = elem['transactions'];
         transactions.forEach(tx => {
@@ -71,6 +91,7 @@ function calcBalance(participant) {
     });
     return total;
 }
+
 
 
 function displayMenu() {
@@ -91,7 +112,9 @@ while (true) {
     const choice = getChoice();
     if (choice == 'a') {
         const txDetails = getUserInput()
-        addTransaction(txDetails['sender'], txDetails['recipient'], txDetails['amount']);
+        if (! addTransaction(txDetails['sender'], txDetails['recipient'], txDetails['amount'])) {
+            log('Transaction failed: Insufficient funds!')
+        };
     } else if (choice == 'p') {
         log(blockchain);
     } else if (choice == 'o') {
